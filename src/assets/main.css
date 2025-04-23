@@ -1,35 +1,140 @@
-@import './base.css';
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
 
 #app {
-  max-width: 1280px;
+  height: 100vh;
+  overflow: auto;
+}
+
+.main-layout {
+  min-height: 100vh;
+}
+
+.header {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  padding: 0 20px;
+  background: #001529;
+  display: flex;
+}
+
+.nav-container {
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+.logo {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 30px;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+.menu-trigger {
+  color: white;
+  font-size: 18px;
+}
+
+.content {
+  padding: 84px 20px 20px;
+  background: #fff;
+  min-height: calc(100vh - 64px - 70px);
+}
+
+.search-filter {
+  max-width: 800px;
+  margin: 0 auto 24px;
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.category-filter {
+  flex-shrink: 0;
+}
+
+.post-list {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.post-card {
+  margin-bottom: 20px;
+  transition: transform 0.2s;
+  cursor: pointer;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+}
+
+.post-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.post-tag {
+  margin: 0 4px;
+}
+
+.post-excerpt {
+  color: rgba(0, 0, 0, 0.85);
+  line-height: 1.6;
+}
+
+.post-footer {
+  margin-top: 12px;
+  display: flex;
+  gap: 16px;
+}
+
+.pagination {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.footer {
+  text-align: center;
+  background: #f0f2f5;
+  padding: 24px 50px;
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    padding: 0 10px;
   }
-}
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+  .logo {
+    font-size: 16px;
+    margin-right: 15px;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-    padding: 0 2rem;
+  .search-filter {
+    flex-direction: column;
+  }
+
+  .post-card {
+    margin-bottom: 12px;
+  }
+
+  .content {
+    padding: 64px 10px 10px;
   }
 }
