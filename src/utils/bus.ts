@@ -1,5 +1,5 @@
 import mitt from 'mitt'
 
-const Bus = mitt()
+const emitter = mitt()
 
-export default Bus
+export default emitter
