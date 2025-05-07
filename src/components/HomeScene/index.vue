@@ -5,30 +5,28 @@
     <div class="canvas-2d" :style="{ zIndex: 2 }">
       <template v-if="!isExperience">
         <div class="canvas-2d-wrapper" style="min-width:1024px;height:100%">
-          <canvas id="canvasBuild" width="1200" height="1173"></canvas>
+          <canvas id="canvasBuild" width="1200" height="1173" />
         </div>
-        <!-- <Logo></Logo> -->
-        <logo-component></logo-component>
+        <LogoComponent />
       </template>
     </div>
   </transition>
 </template>
 
-<script lang="ts" name="HomeScene">
+<script setup lang="ts">
 import * as THREE from 'three'
 
 import Renderer2D from '@/utils/Renderer2D';
-import LogoComponent from './Logo.vue';
+import LogoComponent from './LogoComponent.vue';
 
 import { getCurrentInstance, onMounted, ref } from 'vue';
 
 import { TweenMax } from 'gsap';
+import * as gsap from 'gsap'
 
 let animGreet: gsap.Animation
 
 const instance = getCurrentInstance()
-
-console.log('logo component - ', LogoComponent)
 
 // const show = ref(true)
 // const isVideo = ref(false)
