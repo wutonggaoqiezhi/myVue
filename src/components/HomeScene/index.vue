@@ -1,5 +1,4 @@
 <template>
-  HomeScene
   <transition appear name="custom-classes-transition" enter-active-class="animated fadeIn"
     leave-active-class="animated fadeOut">
     <div class="canvas-2d" :style="{ zIndex: 2 }">
@@ -16,17 +15,16 @@
 <script setup lang="ts">
 import * as THREE from 'three'
 
+import emitter from '@/utils/bus';
 import Renderer2D from '@/utils/Renderer2D';
 import LogoComponent from './LogoComponent.vue';
 
-import { getCurrentInstance, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { TweenMax } from 'gsap';
 import * as gsap from 'gsap'
 
 let animGreet: gsap.Animation
-
-const instance = getCurrentInstance()
 
 // const show = ref(true)
 // const isVideo = ref(false)
@@ -47,8 +45,8 @@ const onLoadComplete = () => {
   isExperience.value = true;
 }
 
-instance?.proxy?.$emitter.on("load.start", onLoadStart);
-instance?.proxy?.$emitter.on("load.complete", onLoadComplete);
+emitter.on("load.start", onLoadStart);
+emitter.on("load.complete", onLoadComplete);
 
 onMounted(() => {
   // @ts-expect-error: 'this' is used to assign a property to the global window object

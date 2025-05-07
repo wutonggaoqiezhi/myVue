@@ -2,27 +2,23 @@
   <div class="container">
 
     <HomeScene :class="{ 'hide': !homeSceneViewing }" v-if="homeSceneViewing"></HomeScene>
-    <!-- <home-scene :class="{ 'hide': !homeSceneViewing }" v-if="homeSceneViewing"></home-scene>
+    <!-- <home-scene :class="{ 'hide': !homeSceneViewing }" v-if="homeSceneViewing"></home-scene> -->
     <main-scene :class="{ 'hide': !mainSceneViewing }" ref="mainScene"></main-scene>
 
     <video-intro v-if="introVideoViewing"></video-intro>
     <video-end v-if="endVideoViewing"></video-end>
 
     <hotspot v-if="hotspotViewing" :class="{ 'hide': !hotspotViewing }" :hotspot="hotspot"></hotspot>
-    <app-footer></app-footer> -->
+    <app-footer></app-footer>
   </div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { getCurrentInstance } from 'vue'
-
+// import emitter from '@/utils/bus'
 // import WuHouCiApp from '@/WuHouCiApp'
 
 import HomeScene from './HomeScene/index.vue'
-
-const instance = getCurrentInstance()
-console.log('instance - ', instance?.proxy?.$emitter)
 
 const homeSceneViewing = ref(true)
 // const introVideoViewing = ref(false)

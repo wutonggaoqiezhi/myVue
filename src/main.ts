@@ -17,19 +17,18 @@ const i18n = createI18n({
 
 const app = createApp(App)
 
-declare module 'vue' {
-  interface ComponentCustomProperties {
-    $emitter: typeof emitter
-  }
-}
+// declare module 'vue' {
+//   interface ComponentCustomProperties {
+//     $emitter: typeof emitter
+//   }
+// }
 
-app.config.globalProperties.$emitter = emitter
+// app.config.globalProperties.$emitter = emitter
 
 app.use(i18n).mount('#app')
 
-// @ts-expect-error: TypeScript does not recognize the custom property $emitter
-app.config.globalProperties.$emitter.on('lang.change', (lang: 'zh' | 'en') => {
-  window.localStorage.setItem('wuhouci-lang', lang)
-  i18n.global.locale.value = lang
+emitter.on('lang.change', (lang) => {
+  window.localStorage.setItem('wuhouci-lang', lang as string)
+  i18n.global.locale.value = lang as 'zh' | 'en'
   console.log(`Language Changed:${lang}`)
 })

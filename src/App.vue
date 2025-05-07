@@ -1,5 +1,4 @@
 <template>
-  App
   <HomeComponent />
 </template>
 

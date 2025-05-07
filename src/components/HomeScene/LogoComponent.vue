@@ -1,8 +1,40 @@
 <template>
   Logo
+  <div class="logo">
+    <transition appear name="custom-classes-transition" enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut">
+      <span class="seal" v-if="readyExperence"></span>
+    </transition>
+    <template v-if="readyLogo">
+      <div class="canvas-words-1">
+        <canvas id="canvas-words-1" width="1156" height="280"></canvas>
+      </div>
+      <div class="canvas-words-2">
+        <canvas id="canvas-words-2" width="900" height="90"></canvas>
+      </div>
+      <transition appear name="custom-classes-transition" enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut">
+        <button v-show="readyExperence" class="btn-startExperience" @click.stop="startExperence()">
+          <span>{{ loading ? $t("Logo.btnStartExperience.loading") : $t("Logo.btnStartExperience.loaded") }}</span>
+        </button>
+      </transition>
+    </template>
+  </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import emitter from '@/utils/bus';
+
+const readyExperence = ref(false)
+const readyLogo = ref(true)
+const loading = ref(false)
+
+console.log('emitter - ', emitter)
+
+const startExperence = () => {
+  emitter!.emit("startExperence");
+};
 </script>
 
 <style lang="less" scoped>
