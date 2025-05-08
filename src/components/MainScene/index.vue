@@ -1,6 +1,6 @@
 <template>
   <div class="canvas-3d" :class="{ 'modal': showGreete }">
-    <canvas id="canvasScene" style="width:100%;height:100%"></canvas>
+    <canvas id="canvasScene" style="width:100%;height:100%" ref='canvasScene'></canvas>
     <GreeteComponent v-if="showGreete" @beginTravel="beginTravel()"></GreeteComponent>
 
     <div class="buttons" v-show="showSceneUI">
@@ -49,6 +49,9 @@ const audioPlaying = ref(true)
 const sceneDescription = ref<{ title: string, content: string }>({ title: '', content: '' })
 const showTips = ref(false)
 const showAddition = ref(false)
+
+const canvasScene = ref<HTMLCanvasElement | null>(null)
+defineExpose({ canvasScene })
 
 const beginTravel = () => {
   emitter.emit("beginTravel");

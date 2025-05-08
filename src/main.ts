@@ -17,6 +17,11 @@ const i18n = createI18n({
 
 const app = createApp(App)
 
+app.config.errorHandler = (err, vm, info) => {
+  console.error('Vue 全局捕获错误：', err)
+  console.warn('错误发生在：', info)
+  // 你可以上报到日志系统，或者统一显示错误弹窗
+}
 // declare module 'vue' {
 //   interface ComponentCustomProperties {
 //     $emitter: typeof emitter

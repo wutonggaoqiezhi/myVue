@@ -1,0 +1,47 @@
+//
+// Protocol Buffer for puck visibility and related data
+//
+//package eos.storage;
+
+// import "eos/infra/common.proto";
+// The following were manually extracted here, JS does not like protobuf imports
+
+message Affine3f {
+	optional Quaternionf rotation = 1;
+	optional Vector3f translation = 2;
+}
+
+message Quaternionf {
+	optional float w = 1;
+	optional float x = 2;
+	optional float y = 3;
+	optional float z = 4;
+}
+
+message Vector3f {
+	optional float x = 1;
+	optional float y = 2;
+	optional float z = 3;
+}
+
+//
+// One sweep / pano
+//
+message SweepLocation {
+	optional bytes uuid = 1;  /* uuid */
+	optional Affine3f pose = 2;  /* camera pose (x, y,z) in meter and a quaternion*/
+	optional Vector3f puck = 3;  /* puck location - x any is generally the same as pose, z is the height of the closest floor under the camera */
+	optional int32 group = 4;  /* floor index */
+	optional int32 subgroup = 5;  /* room index */
+	repeated int32 visibles = 6;  /* list of indices to all pucks visible from this puck */
+	repeated float scores = 7; /* used as part of scoring function for determining which puck to go to next */
+	repeated int32 visibles2 = 8;  /* list of indices to all pucks visible from this puck */
+	repeated int32 visibles3 = 9;
+}
+
+//
+// All pucks in a model. Pucks are stored in scanning order.
+//
+message NavigationInfo {
+	repeated SweepLocation sweepLocations = 1;
+}

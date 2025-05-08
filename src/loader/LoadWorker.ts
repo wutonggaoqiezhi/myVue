@@ -9,7 +9,7 @@ export default class LoadWorker {
   private callBack?: (data: unknown) => void
 
   constructor() {
-    this.worker = new Worker('worker/worker.js')
+    this.worker = new Worker('worker/worker.ts')
     this.worker.addEventListener(
       'message',
       (event) => {
@@ -38,7 +38,7 @@ export default class LoadWorker {
   }
 
   private createWorker() {
-    this.worker = new Worker('worker/worker.js')
+    this.worker = new Worker('worker/worker.ts')
     this.worker.addEventListener(
       'message',
       (event) => {
@@ -69,6 +69,7 @@ export default class LoadWorker {
       this.timeOutHandle = window.setTimeout(() => {
         this.worker.terminate()
         if (this.callBack) {
+          console.log('aaa')
           this.callBack({ msg: 'error', data: 'noData' })
         }
         this.used = false

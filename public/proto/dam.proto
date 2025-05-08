@@ -1,0 +1,57 @@
+package dam;
+syntax = "proto3";
+
+
+message binary_mesh {
+	repeated chunk_simple chunk = 1;
+	repeated chunk_quantized quantized_chunk = 2;
+}
+
+// Definition of vertices: 3D coordinates, and 2D texture coordinates.
+message vertices_simple {
+	repeated float xyz = 1 [packed=true];  // x_0,y_0,z_0, x_1,y_1,z_1, ...
+	repeated float uv = 2 [packed=true];  // u_0,v_0, u_1,v_1, ...
+}
+
+// Indexes of vertices of faces
+message faces_simple {
+	repeated uint32 faces = 1 [packed=true]; // i00,i01,i02, i10,i11,i12, ...
+}
+
+// A simply encoded chunk.
+// TODO: add chunk properites (such as "reflective")
+message chunk_simple {
+	optional vertices_simple vertices = 1;
+	optional faces_simple faces = 2;
+	optional string chunk_name = 3;
+	optional string material_name = 4;
+}
+
+// Quantized versions follow:
+message vertices_quantized {
+	optional float quantization = 1;
+	repeated float translation = 2;
+	repeated sint32 x = 3 [packed=true];
+	repeated sint32 y = 4 [packed=true];
+	repeated sint32 z = 5 [packed=true];
+}
+
+message uv_quantized {
+	optional string name = 1;
+	optional float quantization = 2;
+	repeated sint32 u = 3 [packed=true];
+	repeated sint32 v = 4 [packed=true];
+}
+
+// Indexes of vertices of faces
+message faces_compressed {
+	repeated sint32 faces = 1 [packed=true]; // i00,i01,i02, i10,i11,i12, ...
+}
+
+message chunk_quantized {
+	optional string chunk_name = 1;
+	optional string material_name = 2;
+	optional vertices_quantized vertices = 3;
+	repeated uv_quantized uvs = 4;
+	optional faces_simple faces = 5;
+}

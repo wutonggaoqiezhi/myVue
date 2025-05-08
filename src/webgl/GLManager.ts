@@ -162,6 +162,7 @@ class GLManager extends THREE.EventDispatcher<MyEventMap> {
   }
 
   render(time: number) {
+    console.log('a')
     if (!this._pause) {
       const dt = this.clock.getDelta()
 

@@ -1,5 +1,4 @@
 <template>
-  Logo
   <div class="logo">
     <transition appear name="custom-classes-transition" enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut">
@@ -29,8 +28,6 @@ import emitter from '@/utils/bus';
 const readyExperence = ref(false)
 const readyLogo = ref(true)
 const loading = ref(false)
-
-console.log('emitter - ', emitter)
 
 const startExperence = () => {
   emitter!.emit("startExperence");

@@ -7,7 +7,16 @@ import AudioManager from './audio/AudioManger'
 // import Guidepost from './webgl/hotspot/Guidepost'
 import FlowEnum from './flow/FlowEnum'
 
-export default class WuHouCiApp extends THREE.EventDispatcher {
+interface MyAppEvents {
+  'hotspot.open': (event: unknown) => void
+  'audio.play': () => void
+  'panoScene.enter': (event: unknown) => void
+  'minimap.update': (event: unknown) => void
+  'flow.open': (event: unknown) => void
+  'flow.close': (event: unknown) => void
+}
+
+export default class WuHouCiApp extends THREE.EventDispatcher<MyAppEvents> {
   public lang: string
   public tweens: TWEEN.Group
   public loader: LoadManager

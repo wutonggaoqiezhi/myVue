@@ -1,4 +1,5 @@
 import * as protobuf from 'protobufjs'
+
 class Decoder {
   dam: protobuf.Root | undefined
   modeldata: protobuf.Root | undefined
