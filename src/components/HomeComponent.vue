@@ -41,8 +41,15 @@ const onLoadingProgress = (event: LoadingEvent) => {
   emitter.emit("load.progress", event.data.loaded / event.data.total);
 }
 
+const onLoadingComplete = () => {
+  emitter.emit("load.complete");
+  // if (this.UIManager) this.UIManager.generateUIControls(this.app.glManager);
+}
+
 onMounted(() => {
-  app = new WuHouCiApp(mainScene.value!.querySelector("#canvasScene")!);
+  const canvas = mainScene.value!
+  console.log('canvas - ', canvas)
+  app = new WuHouCiApp(canvas.querySelector('#canvasScene')!);
   app.init();
 
   setTimeout(() => {
@@ -50,9 +57,9 @@ onMounted(() => {
     onLoadingStart();
   }, 1000)
 
-  // app.loader.addEventListener("start", onLoadingStart)
-  // app.loader.addEventListener("progress", onLoadingProgress)
-  // app.loader.addEventListener("complete", onLoadingComplete)
+  app.loader.addEventListener("start", onLoadingStart)
+  app.loader.addEventListener("progress", onLoadingProgress)
+  app.loader.addEventListener("complete", onLoadingComplete)
 })
 </script>
 

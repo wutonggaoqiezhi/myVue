@@ -4,7 +4,13 @@ import * as THREE from 'three'
 
 const BASE_URL = '../'
 
-export default class LoadManager extends THREE.EventDispatcher {
+interface MyEventMap {
+  start: unknown
+  progress: { data: { loaded: number; total: number } }
+  complete: unknown
+}
+
+export default class LoadManager extends THREE.EventDispatcher<MyEventMap> {
   MAX_SIMULTANEOUS_REQUEST = 1
 
   private loadQueue: LoadRequest[] = []
@@ -22,7 +28,7 @@ export default class LoadManager extends THREE.EventDispatcher {
     this.numOfDone = 0
   }
 
-  addRequest(url: string, responseType: string, callBack: Function) {
+  addRequest(url: string, responseType: string, callBack: (message: unknown) => void) {
     this.loadQueue.push(new LoadRequest(`${BASE_URL.trim()}${url.trim()}`, responseType, callBack))
     this.numOfTotal++
   }
@@ -40,28 +46,31 @@ export default class LoadManager extends THREE.EventDispatcher {
     if (this.loadQueue.length == 0) return
 
     for (let i = 0; i < this.loadQueue.length; i++) {
-      this.loadQueue[i].noNeedForLoad() ||
-        this.handleRequest(this.loadQueue[i], (message) => {
-          this.loadQueue[i].callBack && this.loadQueue[i].callBack(message)
-          if (message.msg == 'success') {
-            this.loadQueue[i].loaded = true
-            this.numOfDone++
-          } else {
-            this.loadQueue[i].failedTimes++
-            console.warn(`retry load ${this.loadQueue[i].url}`)
-          }
+      const item = this.loadQueue[i]
+      if (item.noNeedForLoad()) continue
 
-          this.handleRequests()
-          this.dispatchEvent({
-            type: 'progress',
-            data: { loaded: this.numOfDone, total: this.numOfTotal },
-          })
-          this.numOfDone == this.numOfTotal && this.dispatchEvent({ type: 'complete' })
+      this.handleRequest(item, (message) => {
+        item.callBack?.(message)
+
+        if ((message as { msg: string }).msg == 'success') {
+          item.loaded = true
+          this.numOfDone++
+        } else {
+          item.failedTimes++
+          console.warn(`retry load ${this.loadQueue[i].url}`)
+        }
+
+        this.handleRequests()
+        this.dispatchEvent({
+          type: 'progress',
+          data: { loaded: this.numOfDone, total: this.numOfTotal },
         })
+        if (this.numOfDone == this.numOfTotal) this.dispatchEvent({ type: 'complete' })
+      })
     }
   }
 
-  private handleRequest(requset: LoadRequest, callBack: Function) {
+  private handleRequest(requset: LoadRequest, callBack: (data: unknown) => void) {
     const numOfNeedRequset = Math.min(this.loadQueue.length, this.loadWorkers.length)
 
     for (let i = 0; i < numOfNeedRequset; i++) {

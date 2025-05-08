@@ -17,6 +17,7 @@ export default defineConfig([
   {
     rules: {
       'vue/multi-word-component-names': ['warn', { ignores: ['index'] }],
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
 ])

@@ -1,24 +1,19 @@
-import * as protobuf from 'protobufjs';
+import * as protobuf from 'protobufjs'
 class Decoder {
+  dam: protobuf.Root | undefined
+  modeldata: protobuf.Root | undefined
 
-    dam: protobuf.Root
-    modeldata: protobuf.Root;
+  constructor() {
+    protobuf.load('proto/dam.proto', (err, root) => {
+      if (err) throw err
+      this.dam = root
+    })
 
-    constructor() {
-
-        protobuf.load("proto/dam.proto", ( err, root) => {
-            if (err) throw err;
-            this.dam = root
-        });
-
-        protobuf.load("proto/vision.proto", ( err, root) => {
-            if (err) throw err;
-            this.modeldata = root
-        });
-
-    }
-
-
+    protobuf.load('proto/vision.proto', (err, root) => {
+      if (err) throw err
+      this.modeldata = root
+    })
+  }
 }
 
-export default new Decoder();
+export default new Decoder()

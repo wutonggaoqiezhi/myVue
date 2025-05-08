@@ -1,30 +1,30 @@
 export default class LoadRequest {
+  url: string
+  responseType: string
 
-    url: string;
-    responseType: string;
+  callBack: (response: unknown) => void
+  loaded: boolean
+  requseted: boolean
+  failedTimes: number
+  retryCount: number
 
-    callBack: Function;
-    loaded: boolean;
-    requseted:boolean;
-    failedTimes: number;
-    retryCount: number
+  constructor(
+    url: string,
+    responseType: string,
+    callBack: (response: unknown) => void,
+    retryCount?: number,
+  ) {
+    this.url = url
+    this.responseType = responseType
 
-    constructor( url: string, responseType: string, callBack: Function, retryCount?: number ) {
+    this.callBack = callBack
+    this.loaded = false
+    this.requseted = false
+    this.failedTimes = 0
+    this.retryCount = retryCount || 0
+  }
 
-        this.url = url;
-        this.responseType = responseType;
-
-        this.callBack = callBack;
-        this.loaded = false;
-        this.requseted = false;
-        this.failedTimes = 0;
-        this.retryCount = retryCount || 0;
-    }
-
-
-    noNeedForLoad() {
-
-        return this.loaded || this.failedTimes > this.retryCount;
-    }
-  
+  noNeedForLoad() {
+    return this.loaded || this.failedTimes > this.retryCount
+  }
 }

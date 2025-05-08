@@ -4,7 +4,7 @@ import LoadManager from './loader/LoadManager'
 import GLManager from './webgl/GLManager'
 import Hotspot from './webgl/hotspot/Hotspot'
 import AudioManager from './audio/AudioManger'
-import Guidepost from './webgl/hotspot/Guidepost'
+// import Guidepost from './webgl/hotspot/Guidepost'
 import FlowEnum from './flow/FlowEnum'
 
 export default class WuHouCiApp extends THREE.EventDispatcher {
